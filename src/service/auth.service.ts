@@ -34,4 +34,8 @@ export class AuthService {
 
     return this.api.restorePassword(formData, token);
   }
+
+  public logout(): Promise<any> {
+    return this.api.logout();
+  }
 }

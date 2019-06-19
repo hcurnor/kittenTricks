@@ -11,6 +11,8 @@ import {
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
   AuthActionValueType,
 } from './type';
 import { User } from '@src/core/model';
@@ -64,4 +66,12 @@ export const restorePasswordSuccess = (user: User): AuthActionValueType => ({
 
 export const restorePasswordFailure = (): AuthActionValueType => ({
   type: RESTORE_PASSWORD_FAILURE,
+});
+
+export const logout = (): AuthActionValueType => ({
+  type: LOGOUT,
+});
+
+export const logoutSuccess = (): AuthActionValueType => ({
+  type: LOGOUT_SUCCESS,
 });

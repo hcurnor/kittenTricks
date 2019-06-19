@@ -498,7 +498,7 @@ const AppNavigator: ReactNavigationContainer = createStackNavigator({
     screen: MenuNavigator,
     navigationOptions: HeadingNavigationOptions,
   },
-  ['Auth']: {
+  ['App Auth']: {
     screen: ApplicationAuthNavigator,
     navigationOptions: EmptyHeaderNavigationOptions,
   },

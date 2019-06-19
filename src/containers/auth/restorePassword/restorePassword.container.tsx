@@ -14,7 +14,7 @@ import {
 } from '../../../actions';
 
 interface StateProps {
-  isAuthenticating: boolean;
+  loading: boolean;
   restore: () => void;
   restoreSuccess: (user: User) => void;
   restoreFailure: () => void;
@@ -23,7 +23,7 @@ interface StateProps {
 type ComponentProps = NavigationScreenProps & StateProps;
 
 const mapStateToProps = (state: GlobalState) => ({
-  isAuthenticating: state.auth.isAuthenticating,
+  loading: state.auth.loading,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
@@ -78,7 +78,7 @@ export class RestorePasswordContainer extends React.Component<ComponentProps, St
   public render(): React.ReactNode {
     return (
       <RestorePassword
-        isAuthenticating={this.props.isAuthenticating}
+        loading={this.props.loading}
         onRestorePasswordPress={this.onRestorePassword}
       />
     );

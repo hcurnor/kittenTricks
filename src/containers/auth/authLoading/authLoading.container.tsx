@@ -34,7 +34,7 @@ export class AuthLoadingContainer extends React.Component<ComponentProps> {
   };
 
   private navigateToAuth = (): void => {
-    this.props.navigation.navigate('Auth');
+    this.props.navigation.navigate('App Auth');
   };
 
   public render(): React.ReactNode {

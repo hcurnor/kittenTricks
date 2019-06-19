@@ -16,6 +16,7 @@ interface AuthApiEndpoints {
   signUp: string;
   resetPassword: string;
   restorePassword: string;
+  logout: string;
   currentUser: string;
 }
 
@@ -24,6 +25,7 @@ const endpoints: AuthApiEndpoints = {
   signUp: '/auth/sign-up',
   resetPassword: '/auth/request-pass',
   restorePassword: '/auth/restore-pass',
+  logout: '/auth/sign-out',
   currentUser: '/users/current',
 };
 
@@ -89,6 +91,21 @@ export class AuthApi {
     )
       .then(this.processToken);
   }
+
+  public logout(): Promise<any> {
+    return ApiService.fetchApi(
+      endpoints.logout,
+      {},
+      API_VERBS.POST,
+      {},
+      false,
+    )
+      .then(this.resetToken);
+  }
+
+  private resetToken = (): Promise<void> => {
+    return AuthStorageService.setToken('');
+  };
 
   private processToken = (response: { token: string }): Promise<AuthApiResponse> => {
     return this.setToken(response.token)

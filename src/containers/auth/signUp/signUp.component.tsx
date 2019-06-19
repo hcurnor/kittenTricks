@@ -23,7 +23,7 @@ import {
 import { PlusIconFill } from '@src/assets/icons';
 
 interface ComponentProps {
-  isAuthenticating: boolean;
+  loading: boolean;
   onSignUpPress: (formData: SignUpFormData) => void;
   onSignInPress: () => void;
   onPhotoPress: () => void;
@@ -58,9 +58,9 @@ class SignUpComponent extends React.Component<SignUpProps, State> {
   };
 
   private getPointerEvents = (): 'none' | 'auto' => {
-    const { isAuthenticating } = this.props;
+    const { loading } = this.props;
 
-    return isAuthenticating ? 'none' : 'auto';
+    return loading ? 'none' : 'auto';
   };
 
   private renderPhotoButtonIcon = (style: StyleType): React.ReactElement<ImageProps> => {
@@ -83,9 +83,9 @@ class SignUpComponent extends React.Component<SignUpProps, State> {
   };
 
   private renderLoading = (): React.ReactElement<LoadingComponentProps> | null => {
-    const { isAuthenticating } = this.props;
+    const { loading } = this.props;
 
-    return isAuthenticating ? (
+    return loading ? (
       <Loading/>
     ) : null;
   };

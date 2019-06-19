@@ -19,7 +19,7 @@ import {
 } from '@src/components/common';
 
 interface ComponentProps {
-  isAuthenticating: boolean;
+  loading: boolean;
   onResetPress: (formData: ForgotPasswordFormData) => void;
 }
 
@@ -44,15 +44,15 @@ class ForgotPasswordComponent extends React.Component<ForgotPasswordProps, State
   };
 
   private getPointerEvents = (): 'none' | 'auto' => {
-    const { isAuthenticating } = this.props;
+    const { loading } = this.props;
 
-    return isAuthenticating ? 'none' : 'auto';
+    return loading ? 'none' : 'auto';
   };
 
   private renderLoading = (): React.ReactElement<LoadingComponentProps> | null => {
-    const { isAuthenticating } = this.props;
+    const { loading } = this.props;
 
-    return isAuthenticating ? (
+    return loading ? (
       <Loading/>
     ) : null;
   };

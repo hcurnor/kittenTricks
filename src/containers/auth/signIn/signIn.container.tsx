@@ -14,7 +14,7 @@ import { GlobalState } from '../../../store';
 import { User } from '../../../core/model';
 
 interface StateProps {
-  isAuthenticating: boolean;
+  loading: boolean;
   signIn: () => void;
   signInSuccess: (user: User) => void;
   signInFailure: () => void;
@@ -23,7 +23,7 @@ interface StateProps {
 type ComponentProps = StateProps & NavigationScreenProps;
 
 const mapStateToProps = (state: GlobalState) => ({
-  isAuthenticating: state.auth.isAuthenticating,
+  loading: state.auth.loading,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
@@ -68,7 +68,7 @@ export class SignInContainer extends React.Component<ComponentProps> {
   public render(): React.ReactNode {
     return (
       <SignIn
-        isAuthenticating={this.props.isAuthenticating}
+        loading={this.props.loading}
         onSignInPress={this.onSignInPress}
         onSignUpPress={this.onSignUpPress}
         onForgotPasswordPress={this.onForgotPasswordPress}

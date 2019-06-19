@@ -12,5 +12,7 @@ export {
   restorePassword,
   restorePasswordSuccess,
   restorePasswordFailure,
+  logout,
+  logoutSuccess,
 } from './auth.actions';
 export * from './type';

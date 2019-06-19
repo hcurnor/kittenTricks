@@ -1,6 +1,6 @@
 import { User } from '@src/core/model';
 
 export interface AuthState {
-  isAuthenticating: boolean;
+  loading: boolean;
   user: User | null;
 }

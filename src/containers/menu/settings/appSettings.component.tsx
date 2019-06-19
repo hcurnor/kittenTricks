@@ -10,9 +10,14 @@ import {
   ThemedComponentProps,
 } from '@kitten/theme';
 import { Text } from '@kitten/ui';
-import { textStyle } from '@src/components/common';
+import {
+  Loading,
+  LoadingComponentProps,
+  textStyle,
+} from '@src/components/common';
 
 interface ComponentProps {
+  loading: boolean;
   onEditProfilePress: () => void;
   onChangePasswordPress: () => void;
   onLogoutPress: () => void;
@@ -34,11 +39,19 @@ class AppSettingsComponent extends React.Component<SettingsProps> {
     this.props.onLogoutPress();
   };
 
-  public render(): React.ReactNode {
+  private renderLoading = (): React.ReactElement<LoadingComponentProps> | null => {
+    const { loading } = this.props;
+
+    return loading ? (
+      <Loading/>
+    ) : null;
+  };
+
+  private renderContent = (): React.ReactNode => {
     const { themedStyle } = this.props;
 
     return (
-      <View style={themedStyle.container}>
+      <React.Fragment>
         <Section
           style={themedStyle.section}
           onPress={this.onEditProfilePress}>
@@ -66,6 +79,17 @@ class AppSettingsComponent extends React.Component<SettingsProps> {
             Logout
           </Text>
         </Section>
+      </React.Fragment>
+    );
+  };
+
+  public render(): React.ReactNode {
+    const { themedStyle } = this.props;
+
+    return (
+      <View style={themedStyle.container}>
+        {this.renderLoading()}
+        {this.renderContent()}
       </View>
     );
   }

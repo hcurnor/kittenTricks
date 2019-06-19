@@ -12,11 +12,13 @@ import {
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
 } from '../actions';
 import { AuthState } from './type';
 
 const initialState: AuthState = {
-  isAuthenticating: false,
+  loading: false,
   user: null,
 };
 
@@ -31,65 +33,75 @@ export const auth = (state: AuthState = initialState,
     case SIGN_IN:
       return {
         ...state,
-        isAuthenticating: true,
+        loading: true,
       };
     case SIGN_IN_SUCCESS:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
         user: action.user,
       };
     case SIGN_IN_FAILURE:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
       };
     case SIGN_UP:
       return {
         ...state,
-        isAuthenticating: true,
+        loading: true,
       };
     case SIGN_UP_SUCCESS:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
         user: action.user,
       };
     case SIGN_UP_FAILURE:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
       };
     case RESET_PASSWORD:
       return {
         ...state,
-        isAuthenticating: true,
+        loading: true,
       };
     case RESET_PASSWORD_SUCCESS:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
       };
     case RESET_PASSWORD_FAILURE:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
       };
     case RESTORE_PASSWORD:
       return {
         ...state,
-        isAuthenticating: true,
+        loading: true,
       };
     case RESTORE_PASSWORD_SUCCESS:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
         user: action.user,
       };
     case RESTORE_PASSWORD_FAILURE:
       return {
         ...state,
-        isAuthenticating: false,
+        loading: false,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

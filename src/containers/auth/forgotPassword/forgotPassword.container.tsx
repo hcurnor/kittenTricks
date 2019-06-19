@@ -13,7 +13,7 @@ import {
 } from '../../../actions';
 
 interface StateProps {
-  isAuthenticating: boolean;
+  loading: boolean;
   reset: () => void;
   resetSuccess: () => void;
   resetFailure: () => void;
@@ -22,7 +22,7 @@ interface StateProps {
 type ComponentProps = StateProps & NavigationScreenProps;
 
 const mapStateToProps = (state: GlobalState) => ({
-  isAuthenticating: state.auth.isAuthenticating,
+  loading: state.auth.loading,
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
@@ -59,7 +59,7 @@ export class ForgotPasswordContainer extends React.Component<ComponentProps> {
   public render(): React.ReactNode {
     return (
       <ForgotPassword
-        isAuthenticating={this.props.isAuthenticating}
+        loading={this.props.loading}
         onResetPress={this.onResetPress}
       />
     );
