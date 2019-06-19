@@ -5,9 +5,9 @@ import {
   SIGN_UP,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
-  RESET_PASSWORD,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE,
+  REQUEST_PASSWORD,
+  REQUEST_PASSWORD_SUCCESS,
+  REQUEST_PASSWORD_FAILURE,
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
@@ -43,16 +43,16 @@ export const singUpFailure = (): AuthActionValueType => ({
   type: SIGN_UP_FAILURE,
 });
 
-export const resetPassword = (): AuthActionValueType => ({
-  type: RESET_PASSWORD,
+export const requestPassword = (): AuthActionValueType => ({
+  type: REQUEST_PASSWORD,
 });
 
-export const resetPasswordSuccess = (): AuthActionValueType => ({
-  type: RESET_PASSWORD_SUCCESS,
+export const requestPasswordSuccess = (): AuthActionValueType => ({
+  type: REQUEST_PASSWORD_SUCCESS,
 });
 
-export const resetPasswordFailure = (): AuthActionValueType => ({
-  type: RESET_PASSWORD_FAILURE,
+export const requestPasswordFailure = (): AuthActionValueType => ({
+  type: REQUEST_PASSWORD_FAILURE,
 });
 
 export const restorePassword = (): AuthActionValueType => ({

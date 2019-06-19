@@ -7,16 +7,16 @@ import { ForgotPassword } from './forgotPassword.component';
 import { AuthService } from '../../../service';
 import { GlobalState } from '../../../store';
 import {
-  resetPassword,
-  resetPasswordSuccess,
-  resetPasswordFailure,
+  requestPassword,
+  requestPasswordSuccess,
+  requestPasswordFailure,
 } from '../../../actions';
 
 interface StateProps {
   loading: boolean;
-  reset: () => void;
-  resetSuccess: () => void;
-  resetFailure: () => void;
+  request: () => void;
+  requestSuccess: () => void;
+  requestFailure: () => void;
 }
 
 type ComponentProps = StateProps & NavigationScreenProps;
@@ -26,9 +26,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
-  reset: () => dispatch(resetPassword()),
-  resetSuccess: () => dispatch(resetPasswordSuccess()),
-  resetFailure: () => dispatch(resetPasswordFailure()),
+  request: () => dispatch(requestPassword()),
+  requestSuccess: () => dispatch(requestPasswordSuccess()),
+  requestFailure: () => dispatch(requestPasswordFailure()),
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -38,14 +38,14 @@ export class ForgotPasswordContainer extends React.Component<ComponentProps> {
   private failureMessage: string = 'Something went wrong while Reset Password';
 
   private onResetPress = (data: ForgotPasswordFormData): void => {
-    this.props.reset();
+    this.props.request();
     this.service.resetPassword(data)
       .then(this.navigateToRestorePassword)
       .catch(this.onResetFailure);
   };
 
   private navigateToRestorePassword = (resetToken: string): void => {
-    this.props.resetSuccess();
+    this.props.requestSuccess();
     this.props.navigation.navigate('Restore Password', {
       resetToken: resetToken,
     });
@@ -53,7 +53,7 @@ export class ForgotPasswordContainer extends React.Component<ComponentProps> {
 
   private onResetFailure = (): void => {
     Alert.alert(this.failureMessage);
-    this.props.resetFailure();
+    this.props.requestFailure();
   };
 
   public render(): React.ReactNode {

@@ -6,9 +6,9 @@ import {
   SIGN_UP,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
-  RESET_PASSWORD,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE,
+  REQUEST_PASSWORD,
+  REQUEST_PASSWORD_SUCCESS,
+  REQUEST_PASSWORD_FAILURE,
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
@@ -62,17 +62,17 @@ export const auth = (state: AuthState = initialState,
         ...state,
         loading: false,
       };
-    case RESET_PASSWORD:
+    case REQUEST_PASSWORD:
       return {
         ...state,
         loading: true,
       };
-    case RESET_PASSWORD_SUCCESS:
+    case REQUEST_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,
       };
-    case RESET_PASSWORD_FAILURE:
+    case REQUEST_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
