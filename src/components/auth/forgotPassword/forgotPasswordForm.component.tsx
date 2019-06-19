@@ -16,6 +16,7 @@ import { EmailIconFill } from '@src/assets/icons';
 import { EmailValidator } from '@src/core/validators';
 import { ForgotPasswordFormData } from './type';
 
+
 interface ComponentProps {
   /**
    * Will emit changes depending on validation:
@@ -23,6 +24,7 @@ interface ComponentProps {
    */
   onDataChange: (value: ForgotPasswordFormData | undefined) => void;
 }
+
 
 export type ForgotPasswordFormProps = ThemedComponentProps & ViewProps & ComponentProps;
 

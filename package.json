@@ -18,19 +18,19 @@
     "ci:build": "npm run env:set -- prod && npm run build"
   },
   "dependencies": {
-    "@eva-design/eva": "1.0.0-beta.2",
+    "@eva-design/eva": "1.0.0",
     "expo": "^33.0.4",
     "expo-analytics": "^1.0.8",
     "expo-camera": "^5.0.1",
     "expo-constants": "^5.0.1",
     "expo-media-library": "^5.0.1",
     "expo-permissions": "^5.0.1",
-    "expo-secure-store": "^5.0.1",
     "react": "^16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-dotenv": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
-    "react-native-ui-kitten": "github:akveo/react-native-ui-kitten#next",
-    "react-navigation": "^3.5.1",
+    "react-native-ui-kitten": "^4.0.0",
+    "react-navigation": "^3.11.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1"
   },
@@ -45,9 +45,6 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "husky": "^1.1.2",
-    "metro-react-native-babel-preset": "^0.49.0",
-    "react-native-dotenv": "^0.2.0",
-    "react-native-typescript-transformer": "^1.2.10",
     "rimraf": "^2.6.2",
     "tslint": "^5.12.1",
     "typescript": "^3.5.1"

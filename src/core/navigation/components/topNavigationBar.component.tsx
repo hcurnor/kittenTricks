@@ -11,36 +11,29 @@ import {
   TopNavigationActionProps,
   TopNavigationProps,
 } from '@kitten/ui';
-import { SafeAreaView } from 'react-navigation';
 import { textStyle } from '@src/components/common';
+import { SafeAreaView } from './safeAreaView.component';
 
 export interface ComponentProps {
-  backIcon?: IconProp;
-  settingsIcon?: IconProp;
+  backIcon?: BackIconProp;
   onBackPress?: () => void;
-  onSettingsPress?: () => void;
 }
 
 export type TopNavigationBarProps = TopNavigationProps & ComponentProps;
 
+type BackIconProp = (style: StyleType) => React.ReactElement<ImageProps>;
 type IconProp = (style: StyleType) => React.ReactElement<ImageProps>;
 type BackButtonElement = React.ReactElement<TopNavigationActionProps>;
 
 class TopNavigationBarComponent extends React.Component<TopNavigationBarProps> {
 
-  private onBackButtonPress = (): void => {
+  private onBackButtonPress = () => {
     if (this.props.onBackPress) {
       this.props.onBackPress();
     }
   };
 
-  private onSettingsButtonPress = (): void => {
-    if (this.props.onSettingsPress) {
-      this.props.onSettingsPress();
-    }
-  };
-
-  private renderBackButton = (source: IconProp): BackButtonElement => {
+  private renderBackButton = (source: BackIconProp): BackButtonElement => {
     return (
       <TopNavigationAction
         icon={source}
@@ -49,27 +42,10 @@ class TopNavigationBarComponent extends React.Component<TopNavigationBarProps> {
     );
   };
 
-  private renderSettingsButton = (source: IconProp): BackButtonElement => {
-    return (
-      <TopNavigationAction
-        icon={source}
-        onPress={this.onSettingsButtonPress}
-      />
-    );
-  };
-
   public render(): React.ReactNode {
-    const {
-      themedStyle,
-      title,
-      backIcon,
-      settingsIcon,
-    } = this.props;
+    const { themedStyle, title, backIcon } = this.props;
 
-    const leftControlElement: BackButtonElement | null =
-      backIcon ? this.renderBackButton(backIcon) : null;
-    const rightControlElement: BackButtonElement | null =
-      settingsIcon ? this.renderSettingsButton(settingsIcon) : null;
+    const leftControlElement: BackButtonElement | null = backIcon ? this.renderBackButton(backIcon) : null;
 
     return (
       <SafeAreaView style={themedStyle.safeArea}>
@@ -79,7 +55,6 @@ class TopNavigationBarComponent extends React.Component<TopNavigationBarProps> {
           titleStyle={textStyle.subtitle}
           subtitleStyle={textStyle.caption1}
           leftControl={leftControlElement}
-          rightControls={[rightControlElement]}
         />
       </SafeAreaView>
     );

@@ -3,14 +3,15 @@ import {
   View,
   StatusBar,
   ViewProps,
-  Platform,
   StatusBarStyle,
+  Platform,
 } from 'react-native';
 import {
   ThemedComponentProps,
   ThemeType,
   withStyles,
 } from '@kitten/theme';
+import Constants from 'expo-constants';
 import { ThemeEnum } from '@src/core/model';
 
 interface ComponentProps {
@@ -50,8 +51,8 @@ export const DynamicStatusBar = withStyles(DynamicStatusBarComponent, (theme: Th
   container: {
     backgroundColor: theme['background-basic-color-1'],
     height: Platform.select({
+      ios: Constants.statusBarHeight,
       android: 0,
-      ios: StatusBar.currentHeight,
     }),
   },
 }));
