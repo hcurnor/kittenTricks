@@ -11,6 +11,9 @@ import {
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
   LOGOUT,
   LOGOUT_SUCCESS,
   AuthActionValueType,
@@ -66,6 +69,18 @@ export const restorePasswordSuccess = (user: User): AuthActionValueType => ({
 
 export const restorePasswordFailure = (): AuthActionValueType => ({
   type: RESTORE_PASSWORD_FAILURE,
+});
+
+export const resetPassword = (): AuthActionValueType => ({
+  type: RESET_PASSWORD,
+});
+
+export const resetPasswordSuccess = (user: User): AuthActionValueType => ({
+  type: RESET_PASSWORD_SUCCESS,
+});
+
+export const resetPasswordFailure = (): AuthActionValueType => ({
+  type: RESET_PASSWORD_FAILURE,
 });
 
 export const logout = (): AuthActionValueType => ({

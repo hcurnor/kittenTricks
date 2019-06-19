@@ -12,6 +12,9 @@ import {
   RESTORE_PASSWORD,
   RESTORE_PASSWORD_SUCCESS,
   RESTORE_PASSWORD_FAILURE,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
   LOGOUT,
   LOGOUT_SUCCESS,
 } from '../actions';
@@ -89,6 +92,21 @@ export const auth = (state: AuthState = initialState,
         user: action.user,
       };
     case RESTORE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        loading: true,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case RESET_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,

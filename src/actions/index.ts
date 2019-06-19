@@ -12,6 +12,9 @@ export {
   restorePassword,
   restorePasswordSuccess,
   restorePasswordFailure,
+  resetPassword,
+  resetPasswordSuccess,
+  resetPasswordFailure,
   logout,
   logoutSuccess,
 } from './auth.actions';

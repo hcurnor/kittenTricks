@@ -6,7 +6,10 @@ import {
 import { AuthApi } from '../api';
 import { AuthApiResponse } from '../api/auth.api';
 import { User } from '../core/model';
-import { RestorePasswordFormData } from '@src/components/auth';
+import {
+  RestorePasswordFormData,
+  ResetPasswordFormData,
+} from '@src/components/auth';
 
 export class AuthService {
 
@@ -24,8 +27,8 @@ export class AuthService {
     return this.api.signUp(formData);
   }
 
-  public resetPassword(formData: ForgotPasswordFormData): Promise<string> {
-    return this.api.resetPassword(formData)
+  public requestPassword(formData: ForgotPasswordFormData): Promise<string> {
+    return this.api.requestPassword(formData)
       .then((data: { token: string }) => data.token);
   }
 
@@ -33,6 +36,10 @@ export class AuthService {
                          token: string): Promise<AuthApiResponse & { user?: User }> {
 
     return this.api.restorePassword(formData, token);
+  }
+
+  public resetPassword(formData: ResetPasswordFormData): Promise<AuthApiResponse> {
+    return this.api.resetPassword(formData);
   }
 
   public logout(): Promise<any> {

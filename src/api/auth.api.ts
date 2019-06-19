@@ -1,21 +1,15 @@
-import {
-  ForgotPasswordFormData,
-  SignInFormData,
-  SignUpFormData,
-} from '../containers/auth';
-import {
-  API_VERBS,
-  ApiService,
-} from '../core/http/api.service';
+import { ForgotPasswordFormData, SignInFormData, SignUpFormData } from '../containers/auth';
+import { API_VERBS, ApiService } from '../core/http/api.service';
 import { AuthStorageService } from '@src/core/authStorage/authStorage.service';
 import { User } from '@src/core/model';
-import { RestorePasswordFormData } from '@src/components/auth';
+import { ResetPasswordFormData, RestorePasswordFormData } from '@src/components/auth';
 
 interface AuthApiEndpoints {
   signIn: string;
   signUp: string;
-  resetPassword: string;
+  requestPassword: string;
   restorePassword: string;
+  resetPassword: string;
   logout: string;
   currentUser: string;
 }
@@ -23,8 +17,9 @@ interface AuthApiEndpoints {
 const endpoints: AuthApiEndpoints = {
   signIn: '/auth/login',
   signUp: '/auth/sign-up',
-  resetPassword: '/auth/request-pass',
+  requestPassword: '/auth/request-pass',
   restorePassword: '/auth/restore-pass',
+  resetPassword: '/auth/reset-pass',
   logout: '/auth/sign-out',
   currentUser: '/users/current',
 };
@@ -65,9 +60,9 @@ export class AuthApi {
       .then(this.processToken);
   }
 
-  public resetPassword(formData: ForgotPasswordFormData): Promise<{ token: string }> {
+  public requestPassword(formData: ForgotPasswordFormData): Promise<{ token: string }> {
     return ApiService.fetchApi(
-      endpoints.resetPassword,
+      endpoints.requestPassword,
       { email: formData.email },
       API_VERBS.POST,
       {},
@@ -90,6 +85,20 @@ export class AuthApi {
       false,
     )
       .then(this.processToken);
+  }
+
+  public resetPassword(formData: ResetPasswordFormData): Promise<AuthApiResponse> {
+    const payload = {
+      newPassword: formData.newPassword,
+      confirmPassword: formData.confirmNewPassword,
+    };
+    return ApiService.fetchApi(
+      endpoints.resetPassword,
+      payload,
+      API_VERBS.POST,
+      {},
+      true,
+    );
   }
 
   public logout(): Promise<any> {

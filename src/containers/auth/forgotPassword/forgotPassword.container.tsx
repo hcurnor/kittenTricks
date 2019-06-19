@@ -35,11 +35,11 @@ const mapDispatchToProps = (dispatch: Function) => ({
 export class ForgotPasswordContainer extends React.Component<ComponentProps> {
 
   private service: AuthService = new AuthService();
-  private failureMessage: string = 'Something went wrong while Reset Password';
+  private failureMessage: string = 'Something went wrong while Restore Password';
 
   private onResetPress = (data: ForgotPasswordFormData): void => {
     this.props.request();
-    this.service.resetPassword(data)
+    this.service.requestPassword(data)
       .then(this.navigateToRestorePassword)
       .catch(this.onResetFailure);
   };

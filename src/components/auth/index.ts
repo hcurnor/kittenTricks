@@ -42,3 +42,8 @@ export {
   RestorePasswordFormProps,
   RestorePasswordForm,
 } from './restorePassword';
+export {
+  ResetPasswordFormData,
+  ResetPasswordFormProps,
+  ResetPasswordForm,
+} from './resetPassword';

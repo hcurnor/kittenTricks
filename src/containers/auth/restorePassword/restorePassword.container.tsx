@@ -10,7 +10,7 @@ import { GlobalState } from '../../../store';
 import {
   restorePassword,
   restorePasswordSuccess,
-  resetPasswordFailure,
+  restorePasswordFailure,
 } from '../../../actions';
 
 interface StateProps {
@@ -29,7 +29,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Function) => ({
   restore: () => dispatch(restorePassword()),
   restoreSuccess: (user: User) => dispatch(restorePasswordSuccess(user)),
-  restoreFailure: () => dispatch(resetPasswordFailure()),
+  restoreFailure: () => dispatch(restorePasswordFailure()),
 });
 
 interface State {

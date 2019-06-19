@@ -11,6 +11,7 @@ import {
   ComponentsContainer,
   ThemesContainer,
   AppSettingsContainer,
+  ResetPasswordContainer,
 } from '@src/containers/menu';
 import {
   ArticlesContainer,
@@ -478,6 +479,10 @@ const MenuNavigator: ReactNavigationContainer = createBottomTabNavigator({
   ['Themes']: ThemesNavigator,
   ['App Settings']: {
     screen: AppSettingsContainer,
+    params: { ...MenuNavigatorParams },
+  },
+  ['Reset Password']: {
+    screen: ResetPasswordContainer,
     params: { ...MenuNavigatorParams },
   },
 }, {

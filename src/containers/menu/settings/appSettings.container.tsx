@@ -40,7 +40,7 @@ export class AppSettingsContainer extends React.Component<ComponentProps> {
   };
 
   private onChangePasswordPress = (): void => {
-
+    this.props.navigation.navigate('Reset Password');
   };
 
   private onLogoutPress = (): void => {
