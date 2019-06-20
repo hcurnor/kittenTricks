@@ -12,6 +12,7 @@ import {
   logout,
   logoutSuccess,
 } from '../../../actions';
+import { resetAndNavigateAction } from '@src/core/navigation';
 
 interface StateProps {
   loading: boolean;
@@ -51,12 +52,7 @@ export class AppSettingsContainer extends React.Component<ComponentProps> {
 
   private onLogout = (): void => {
     this.props.logoutSuccess();
-
-    const resetAction: NavigationResetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'App Auth' })],
-    });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAndNavigateAction('App Auth'));
   };
 
   public render(): React.ReactNode {

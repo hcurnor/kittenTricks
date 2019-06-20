@@ -12,7 +12,7 @@ import {
 } from './core/appLoader/applicationLoader.component';
 import { Router } from './core/navigation/routes';
 import { trackScreenTransition } from './core/utils/analytics';
-import { getCurrentStateName } from './core/navigation/routeUtil';
+import { getCurrentStateName } from '@src/core/navigation/util';
 import { themes } from '@src/core/themes';
 import { GlobalState } from './store';
 

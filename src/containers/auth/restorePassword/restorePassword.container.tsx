@@ -12,6 +12,7 @@ import {
   restorePasswordSuccess,
   restorePasswordFailure,
 } from '../../../actions';
+import { resetAndNavigateAction } from '@src/core/navigation';
 
 interface StateProps {
   loading: boolean;
@@ -66,7 +67,7 @@ export class RestorePasswordContainer extends React.Component<ComponentProps, St
   private onRestorePasswordSuccess = (response: { success: boolean, user?: User }): void => {
     if (response.success) {
       this.props.restoreSuccess(response.user);
-      this.props.navigation.navigate('Home');
+      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
     }
   };
 

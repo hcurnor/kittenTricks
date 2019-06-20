@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { SignUp } from './signUp.component';
@@ -11,7 +12,10 @@ import {
   singUpSuccess,
   singUpFailure,
 } from '../../../actions';
-import { connect } from 'react-redux';
+import {
+  resetAndNavigateAction,
+  navigateAction,
+} from '@src/core/navigation';
 
 interface StateProps {
   loading: boolean;
@@ -48,7 +52,7 @@ export class SignUpContainer extends React.Component<ComponentProps> {
   private onSignUpSuccess = (response: { success: boolean, user?: User }): void => {
     if (response.success) {
       this.props.signUpSuccess(response.user);
-      this.props.navigation.navigate('Home');
+      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
     }
   };
 
@@ -58,7 +62,7 @@ export class SignUpContainer extends React.Component<ComponentProps> {
   };
 
   private onSignInPress = (): void => {
-    this.props.navigation.navigate('Sign In');
+    this.props.navigation.dispatch(navigateAction('Sign In'));
   };
 
 

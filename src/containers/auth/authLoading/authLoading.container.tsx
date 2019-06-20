@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 import { AuthStorageService } from '../../../core/authStorage/authStorage.service';
+import { resetAndNavigateAction } from '@src/core/navigation';
 
 type ComponentProps = NavigationScreenProps;
 
@@ -30,11 +31,11 @@ export class AuthLoadingContainer extends React.Component<ComponentProps> {
   };
 
   private navigateToApp = (): void => {
-    this.props.navigation.navigate('Home');
+    this.props.navigation.dispatch(resetAndNavigateAction('Home'));
   };
 
   private navigateToAuth = (): void => {
-    this.props.navigation.navigate('App Auth');
+    this.props.navigation.dispatch(resetAndNavigateAction('App Auth'));
   };
 
   public render(): React.ReactNode {

@@ -18,6 +18,7 @@ import {
   resetPasswordSuccess,
   resetPasswordFailure,
 } from '../../../actions';
+import { resetAndNavigateAction } from '@src/core/navigation';
 
 interface StateProps {
   loading: boolean;
@@ -45,28 +46,15 @@ export class ResetPasswordContainer extends React.Component<ComponentProps> {
   private failureMessage: string = 'Something went wrong while Reset Password';
 
   private onResetPassword = (data: ResetPasswordFormData): void => {
-    this.props.reset();
-    this.service.resetPassword(data)
-      .then(this.onResetPasswordSuccess)
-      .catch(this.onResetPasswordFailure);
+
   };
 
   private onResetPasswordSuccess = (response: AuthApiResponse): void => {
-    if (response.success) {
-      this.props.resetSuccess();
-      const resetAction: NavigationResetAction = StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName: 'App Auth' })],
-      });
-      this.props.navigation.dispatch(resetAction);
-    } else {
-      this.props.resetFailure();
-    }
+
   };
 
   private onResetPasswordFailure = (): void => {
-    Alert.alert(this.failureMessage);
-    this.props.resetFailure();
+
   };
 
   public render(): React.ReactNode {

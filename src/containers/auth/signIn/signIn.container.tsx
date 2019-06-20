@@ -12,6 +12,10 @@ import {
 } from '../../../actions';
 import { GlobalState } from '../../../store';
 import { User } from '../../../core/model';
+import {
+  resetAndNavigateAction,
+  navigateAction,
+} from '@src/core/navigation';
 
 interface StateProps {
   loading: boolean;
@@ -48,7 +52,7 @@ export class SignInContainer extends React.Component<ComponentProps> {
   private onSingInSuccess = (response: { success: boolean, user?: User }): void => {
     if (response.success) {
       this.props.signInSuccess(response.user);
-      this.props.navigation.navigate('Home');
+      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
     }
   };
 
@@ -58,11 +62,11 @@ export class SignInContainer extends React.Component<ComponentProps> {
   };
 
   private onSignUpPress = (): void => {
-    this.props.navigation.navigate('Sign Up');
+    this.props.navigation.dispatch(navigateAction('Sign Up'));
   };
 
   private onForgotPasswordPress = (): void => {
-    this.props.navigation.navigate('Forgot Password');
+    this.props.navigation.dispatch(navigateAction('Forgot Password'));
   };
 
   public render(): React.ReactNode {
