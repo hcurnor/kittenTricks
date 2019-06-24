@@ -1,12 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  NavigationActions,
-  NavigationResetAction,
-  NavigationScreenProps,
-  StackActions,
-} from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import { ResetPassword } from './resetPassword.component';
 import { ResetPasswordFormData } from '@src/components/auth';
 import { User } from '@src/core/model';
@@ -46,15 +41,20 @@ export class ResetPasswordContainer extends React.Component<ComponentProps> {
   private failureMessage: string = 'Something went wrong while Reset Password';
 
   private onResetPassword = (data: ResetPasswordFormData): void => {
-
+    this.props.reset();
+    this.service.resetPassword(data)
+      .then(this.onResetPasswordSuccess)
+      .catch(this.onResetPasswordFailure);
   };
 
   private onResetPasswordSuccess = (response: AuthApiResponse): void => {
-
+    this.props.resetSuccess();
+    this.props.navigation.dispatch(resetAndNavigateAction('App Auth'));
   };
 
   private onResetPasswordFailure = (): void => {
-
+    this.props.resetFailure();
+    Alert.alert(this.failureMessage);
   };
 
   public render(): React.ReactNode {

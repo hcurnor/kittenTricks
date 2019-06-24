@@ -1,5 +1,7 @@
 import { API_BASE_URL } from 'react-native-dotenv';
 import { AuthStorageService } from '../authStorage/authStorage.service';
+import { errorComparator } from 'tslint/lib/verify/lintError';
+import { string } from 'prop-types';
 
 const authHeader: string = 'Authorization';
 
@@ -44,9 +46,24 @@ export class ApiService {
       .then((processedHeaders: any) => {
         const requestConfig = this.getRequestConfig(method, processedHeaders, payload);
         return fetch(`${API_BASE_URL}${endpoint}`, requestConfig)
-          .then((response: Response) => response.json());
+          .then(this.onApiResponseSuccess)
+          .catch(this.onApiResponseError);
       });
   }
+
+  private static onApiResponseSuccess = (response: Response): Promise<any> => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      return new Promise<string>((resolve: () => void, reject: () => void) => {
+        reject();
+      });
+    }
+  };
+
+  private static onApiResponseError = (error: Error): Error => {
+    return error;
+  };
 
   private static getRequestConfig(method: API_VERBS,
                                   headers: any,

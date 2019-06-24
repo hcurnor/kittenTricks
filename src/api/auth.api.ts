@@ -1,8 +1,18 @@
-import { ForgotPasswordFormData, SignInFormData, SignUpFormData } from '../containers/auth';
-import { API_VERBS, ApiService } from '../core/http/api.service';
+import {
+  ForgotPasswordFormData,
+  SignInFormData,
+  SignUpFormData,
+} from '../containers/auth';
+import {
+  API_VERBS,
+  ApiService,
+} from '../core/http/api.service';
 import { AuthStorageService } from '@src/core/authStorage/authStorage.service';
 import { User } from '@src/core/model';
-import { ResetPasswordFormData, RestorePasswordFormData } from '@src/components/auth';
+import {
+  ResetPasswordFormData,
+  RestorePasswordFormData,
+} from '@src/components/auth';
 
 interface AuthApiEndpoints {
   signIn: string;
@@ -25,8 +35,6 @@ const endpoints: AuthApiEndpoints = {
 };
 
 export interface AuthApiResponse {
-  success: boolean;
-
   [key: string]: any;
 }
 
@@ -123,14 +131,12 @@ export class AuthApi {
           return this.getCurrentUser()
             .then((user: User) => {
               return {
-                success: true,
                 user: user,
                 token: token,
               };
             });
         }
-      })
-      .catch(() => ({ success: false }));
+      });
   };
 
   private setToken(token: string): Promise<string> {

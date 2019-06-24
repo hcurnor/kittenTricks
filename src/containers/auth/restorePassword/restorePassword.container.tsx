@@ -64,11 +64,9 @@ export class RestorePasswordContainer extends React.Component<ComponentProps, St
       .catch(this.onRestorePasswordFailure);
   };
 
-  private onRestorePasswordSuccess = (response: { success: boolean, user?: User }): void => {
-    if (response.success) {
-      this.props.restoreSuccess(response.user);
-      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
-    }
+  private onRestorePasswordSuccess = (response: { user?: User }): void => {
+    this.props.restoreSuccess(response.user);
+    this.props.navigation.dispatch(resetAndNavigateAction('Home'));
   };
 
   private onRestorePasswordFailure = (): void => {

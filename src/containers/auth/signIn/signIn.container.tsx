@@ -49,14 +49,12 @@ export class SignInContainer extends React.Component<ComponentProps> {
       .catch(this.onSignInFailure);
   };
 
-  private onSingInSuccess = (response: { success: boolean, user?: User }): void => {
-    if (response.success) {
-      this.props.signInSuccess(response.user);
-      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
-    }
+  private onSingInSuccess = (response: { user?: User }): void => {
+    this.props.signInSuccess(response.user);
+    this.props.navigation.dispatch(resetAndNavigateAction('Home'));
   };
 
-  private onSignInFailure = (error: any): void => {
+  private onSignInFailure = (error: Error): void => {
     Alert.alert(this.failureMessage);
     this.props.signInFailure();
   };

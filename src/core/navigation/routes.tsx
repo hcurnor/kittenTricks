@@ -306,6 +306,16 @@ const LayoutsNavigator: NavigationContainer = createStackNavigator(
   },
 );
 
+const AppSettingsNavigator: NavigationContainer = createStackNavigator(
+  {
+    ['App Settings']: AppSettingsContainer,
+    ['Reset Password']: ResetPasswordContainer,
+  },
+  {
+    defaultNavigationOptions: MenuNavigationOptions,
+  },
+);
+
 const MenuNavigator: NavigationContainer = createBottomTabNavigator({
   ['Layouts']: LayoutsNavigator,
   ['Components']: ComponentsNavigator,
@@ -324,6 +334,7 @@ const ApplicationAuthNavigator: NavigationContainer = createStackNavigator({
 });
 
 const AppNavigator: NavigationContainer = createStackNavigator({
+  ['Auth Loading']: AuthLoadingContainer,
   ['Home']: MenuNavigator,
   ...AuthNavigationMap,
   ...SocialNavigationMap,
@@ -332,17 +343,8 @@ const AppNavigator: NavigationContainer = createStackNavigator({
   ...DarhboardsNavigationMap,
   ...EcommerceNavigationMap,
   ['App Auth']: ApplicationAuthNavigator,
-  ['Auth Loading']: AuthLoadingContainer,
-  ['App Settings']: {
-    screen: AppSettingsContainer,
-    // defaultNavigationOptions: MenuNavigationOptions,
-  },
-  ['Reset Password']: {
-    screen: ResetPasswordContainer,
-    // defaultNavigationOptions: MenuNavigationOptions,
-  },
+  ['App Settings']: AppSettingsNavigator,
 }, {
-  initialRouteName: 'Auth Loading',
   defaultNavigationOptions: {
     header: null,
   },

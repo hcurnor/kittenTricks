@@ -49,14 +49,12 @@ export class SignUpContainer extends React.Component<ComponentProps> {
       .catch(this.onSignUpFailure);
   };
 
-  private onSignUpSuccess = (response: { success: boolean, user?: User }): void => {
-    if (response.success) {
-      this.props.signUpSuccess(response.user);
-      this.props.navigation.dispatch(resetAndNavigateAction('Home'));
-    }
+  private onSignUpSuccess = (response: { user?: User }): void => {
+    this.props.signUpSuccess(response.user);
+    this.props.navigation.dispatch(resetAndNavigateAction('Home'));
   };
 
-  private onSignUpFailure = (error: any): void => {
+  private onSignUpFailure = (error: Error): void => {
     Alert.alert(this.failureMessage);
     this.props.signUpFailure();
   };

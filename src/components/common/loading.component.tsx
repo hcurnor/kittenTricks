@@ -35,6 +35,7 @@ export const Loading = withStyles(LoadingComponent, (theme: ThemeType) => ({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: theme['background-basic-color-4'],
     opacity: 0.7,
+    zIndex: 99,
     alignItems: 'center',
     justifyContent: 'center',
   },
