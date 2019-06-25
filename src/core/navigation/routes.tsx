@@ -105,6 +105,7 @@ import {
   ArticlesNavigationOptions,
   DashboardNavigationOptions,
   EcommerceNavigationOptions,
+  MenuHomeNavigationOptions,
   MenuNavigationOptions,
   SocialNavigationOptions,
 } from './options';
@@ -266,7 +267,10 @@ const AuthNavigationMap: NavigationRouteConfigMap = {
 
 const ThemesNavigator: NavigationContainer = createStackNavigator(
   {
-    ['Themes']: ThemesContainer,
+    ['Themes']: {
+      screen: ThemesContainer,
+      navigationOptions: MenuHomeNavigationOptions,
+    },
   }, {
     defaultNavigationOptions: MenuNavigationOptions,
   },
@@ -274,7 +278,10 @@ const ThemesNavigator: NavigationContainer = createStackNavigator(
 
 const ComponentsNavigator: NavigationContainer = createStackNavigator(
   {
-    ['Components']: ComponentsContainer,
+    ['Components']: {
+      screen: ComponentsContainer,
+      navigationOptions: MenuHomeNavigationOptions,
+    },
     ['Button']: ButtonContainer,
     ['Button Group']: ButtonGroupContainer,
     ['CheckBox']: CheckBoxContainer,
@@ -298,7 +305,10 @@ const ComponentsNavigator: NavigationContainer = createStackNavigator(
 
 const LayoutsNavigator: NavigationContainer = createStackNavigator(
   {
-    ['Layouts']: LayoutsContainer,
+    ['Layouts']: {
+      screen: LayoutsContainer,
+      navigationOptions: MenuHomeNavigationOptions,
+    },
     ['Auth']: AuthContainer,
     ['Social']: SocialContainer,
     ['Articles']: ArticlesContainer,

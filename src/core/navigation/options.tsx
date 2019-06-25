@@ -40,6 +40,26 @@ const MenuTopNavigationParams: TopNavigationParams = {
       <TopNavigationBar
         {...props}
         title={routeName}
+
+        backIcon={isRootRoute(index) && ArrowIosBackFill}
+        onBackPress={() => {
+          props.navigation.goBack(KEY_NAVIGATION_BACK);
+        }}
+      />
+    );
+  },
+};
+
+const MenuTopHomeNavigationParams: TopNavigationParams = {
+  header: (props: NavigationScreenProps): TopNavigationElement => {
+    // @ts-ignore (private API)
+    const { routeName } = getCurrentRouteState(props.navigation);
+    const index: number = getCurrentRouteIndex(props.navigation);
+
+    return (
+      <TopNavigationBar
+        {...props}
+        title={routeName}
         settingsIcon={SettingsIconFill}
         onSettingsPress={() => {
           props.navigation.navigate('App Settings');
@@ -93,6 +113,11 @@ const MenuBottomNavigationParams: BottomNavigationParams = {
 
 export const MenuNavigationOptions: NavigationParams = {
   ...MenuTopNavigationParams,
+  ...MenuBottomNavigationParams,
+};
+
+export const MenuHomeNavigationOptions: NavigationParams = {
+  ...MenuTopHomeNavigationParams,
   ...MenuBottomNavigationParams,
 };
 
