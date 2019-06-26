@@ -18,4 +18,5 @@ export {
   logout,
   logoutSuccess,
 } from './auth.actions';
+export { getUserProfile } from './user.actions';
 export * from './type';

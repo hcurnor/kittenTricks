@@ -15,6 +15,10 @@ export interface AuthActionValueType extends ActionValueType {
   user?: User;
 }
 
+export interface UserActionValueType extends ActionValueType {
+  user?: User;
+}
+
 export const TOGGLE_THEME: string = 'TOGGLE_THEME';
 
 export const SIGN_IN: string = 'SIGN_IN';
@@ -34,3 +38,5 @@ export const RESET_PASSWORD_SUCCESS: string = 'RESET_PASSWORD_SUCCESS';
 export const RESET_PASSWORD_FAILURE: string = 'RESET_PASSWORD_FAILURE';
 export const LOGOUT: string = 'LOGOUT';
 export const LOGOUT_SUCCESS: string = 'LOGOUT_SUCCESS';
+
+export const GET_USER_PROFILE: string = 'GET_USER_PROFILE';

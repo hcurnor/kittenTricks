@@ -58,7 +58,7 @@ class AppSettingsComponent extends React.Component<SettingsProps> {
           <Text
             style={themedStyle.sectionText}
             category='s2'>
-            Edit Profile
+            User Profile
           </Text>
         </Section>
         <Section

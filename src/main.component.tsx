@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ImageRequireSource } from 'react-native';
+import {
+  Alert,
+  ImageRequireSource,
+} from 'react-native';
 import { NavigationState } from 'react-navigation';
 import { Font } from 'expo';
 import { mapping } from '@eva-design/eva';
@@ -15,6 +18,9 @@ import { trackScreenTransition } from './core/utils/analytics';
 import { getCurrentStateName } from '@src/core/navigation/util';
 import { themes } from '@src/core/themes';
 import { GlobalState } from './store';
+import { ThemeEnum, User } from '@src/core/model';
+import { getUserProfile } from './actions';
+import { UserService } from './service';
 
 const images: ImageRequireSource[] = [
   require('./assets/images/source/image-profile-1.jpg'),
@@ -44,10 +50,44 @@ const assets: Assets = {
 
 const mapStateToProps = (state: GlobalState) => ({
   theme: state.theme,
+  user: state.user.user,
 });
 
-@connect(mapStateToProps, null)
-export class Main extends React.Component<GlobalState> {
+const mapDispatchToProps = (dispatch: Function) => ({
+  setUserProfile: (user?: User) => dispatch(getUserProfile(user)),
+});
+
+interface MainComponentProps {
+  theme?: ThemeEnum;
+  user?: User;
+  setUserProfile?: (user: User) => void;
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export class Main extends React.Component<MainComponentProps> {
+
+  public componentWillMount(): void {
+    this.setCurrentUser();
+  }
+
+  private userService: UserService = new UserService();
+  private failureMessage: string = 'Something went wrong while getting Profile Info';
+
+  private setCurrentUser = (): void => {
+    if (!this.props.user) {
+      this.userService.getCurrentUser()
+        .then(this.onGetCurrentUserSuccess)
+        .catch(this.onGetCurrentUserError);
+    }
+  };
+
+  private onGetCurrentUserSuccess = (user: User): void => {
+    this.props.setUserProfile(user);
+  };
+
+  private onGetCurrentUserError = (): void => {
+    Alert.alert(this.failureMessage);
+  };
 
   private onTransitionTrackError = (error: any): void => {
     console.warn('Analytics error: ', error.message);

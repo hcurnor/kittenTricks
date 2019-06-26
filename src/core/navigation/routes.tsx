@@ -14,6 +14,7 @@ import {
   ThemesContainer,
   AppSettingsContainer,
   ResetPasswordContainer,
+  ProfileSettingsContainer,
 } from '@src/containers/menu';
 import {
   Article1Container,
@@ -325,6 +326,7 @@ const AppSettingsNavigator: NavigationContainer = createStackNavigator(
   {
     ['App Settings']: AppSettingsContainer,
     ['Reset Password']: ResetPasswordContainer,
+    ['Profile Settings']: ProfileSettingsContainer,
   },
   {
     defaultNavigationOptions: MenuNavigationOptions,

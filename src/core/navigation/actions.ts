@@ -3,11 +3,10 @@ import {
   NavigationNavigateAction,
   NavigationResetAction, StackActions,
 } from 'react-navigation';
-import { KEY_NAVIGATION_ROOT } from './constants';
 
 export const navigateAction = (route: string): NavigationNavigateAction => {
   return NavigationActions.navigate({
-    key: KEY_NAVIGATION_ROOT,
+    key: '@kitten-tricks/root',
     routeName: route,
   });
 };
