@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationScreenProps } from 'react-navigation';
 import { AppSettings } from './appSettings.component';
@@ -41,10 +42,13 @@ export class AppSettingsContainer extends React.Component<ComponentProps> {
   };
 
   private onChangePasswordPress = (): void => {
-    this.props.navigation.navigate({
-      key: this.navigationKey,
-      routeName: 'Reset Password',
-    });
+    // todo: continue functionality implementation
+    Alert.alert('Feature is not available!');
+
+    // this.props.navigation.navigate({
+    //   key: this.navigationKey,
+    //   routeName: 'Reset Password',
+    // });
   };
 
   private onLogoutPress = (): void => {

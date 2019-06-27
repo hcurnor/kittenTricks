@@ -38,10 +38,13 @@ export class ForgotPasswordContainer extends React.Component<ComponentProps> {
   private failureMessage: string = 'Something went wrong while Restore Password';
 
   private onResetPress = (data: ForgotPasswordFormData): void => {
-    this.props.request();
-    this.service.requestPassword(data)
-      .then(this.navigateToRestorePassword)
-      .catch(this.onResetFailure);
+    // todo: continue functionality implementaion
+    Alert.alert('Feature is not yet available!');
+
+    // this.props.request();
+    // this.service.requestPassword(data)
+    //   .then(this.navigateToRestorePassword)
+    //   .catch(this.onResetFailure);
   };
 
   private navigateToRestorePassword = (resetToken: string): void => {

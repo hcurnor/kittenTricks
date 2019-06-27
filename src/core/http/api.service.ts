@@ -4,16 +4,28 @@ import {
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
 } from '../authStorage/authStorage.service';
-import {
-  endpoints,
-  ServerApiResponse,
-} from '../../api/auth.api';
+
+const refreshTokenEndpoint: string = '/auth/refresh-token';
 
 const authHeader: string = 'Authorization';
 
 const contentJson: { [key: string]: any } = {
   'Content-Type': 'application/json',
 };
+
+export interface SecurityApiResponse {
+  access_token?: string;
+  expires_in?: number;
+  refresh_token?: string;
+
+  [key: string]: any;
+}
+
+export interface RequestConfigType {
+  method: API_VERBS;
+  headers: { [key: string]: any };
+  body?: string;
+}
 
 export enum API_VERBS {
   GET = 'GET',
@@ -25,12 +37,12 @@ export enum API_VERBS {
 export class ApiService {
 
   public static fetchApi(endpoint: string,
-                         payload: any = null,
+                         payload: { [key: string]: any } = null,
                          method: API_VERBS = API_VERBS.GET,
-                         headers: any = {},
+                         headers: { [key: string]: any } = {},
                          needAuth: boolean = true): Promise<any> {
 
-    const requestHeaders: any = {
+    const requestHeaders: { [key: string]: any } = {
       ...contentJson,
       ...headers,
     };
@@ -50,14 +62,16 @@ export class ApiService {
 
     return promise
       .then((processedHeaders: any) => {
-        const requestConfig = this.getRequestConfig(method, processedHeaders, payload);
+        const requestConfig: RequestConfigType = this.getRequestConfig(method, processedHeaders, payload);
         return fetch(`${API_BASE_URL}${endpoint}`, requestConfig)
           .then((response: Response) => this.onApiResponseSuccess(response, requestConfig))
           .catch(this.onApiResponseError);
       });
   }
 
-  private static onApiResponseSuccess = (response: Response, requestConfig: any): Promise<any> => {
+  private static onApiResponseSuccess = (response: Response,
+                                         requestConfig: RequestConfigType): Promise<any> => {
+
     if (response.status === 200) {
       return response.json();
     } else if (response.status === 403) {
@@ -71,7 +85,9 @@ export class ApiService {
     }
   };
 
-  private static retryRequest = (responce: Response, requestConfig: any): Promise<any> => {
+  private static retryRequest = (responce: Response,
+                                 requestConfig: RequestConfigType): Promise<any> => {
+
     const url: string = responce.url.replace(API_BASE_URL, '');
     const payload: any = requestConfig.body ? JSON.parse(requestConfig.body) : {};
     return ApiService.fetchApi(
@@ -82,7 +98,7 @@ export class ApiService {
     );
   };
 
-  private static resetAuthData = (data: { token: ServerApiResponse }): Promise<[void, void, void]> => {
+  private static resetAuthData = (data: { token: SecurityApiResponse }): Promise<[void, void, void]> => {
     return Promise.all([
       AuthStorageService.setToken(ACCESS_TOKEN_KEY, data.token.access_token),
       AuthStorageService.setToken(REFRESH_TOKEN_KEY, data.token.refresh_token),
@@ -90,7 +106,7 @@ export class ApiService {
     ]);
   };
 
-  private static handleTokenExpiration(): Promise<{ token: ServerApiResponse }> {
+  private static handleTokenExpiration(): Promise<{ token: SecurityApiResponse }> {
     return Promise.all([
       AuthStorageService.getToken(ACCESS_TOKEN_KEY),
       AuthStorageService.getToken(REFRESH_TOKEN_KEY),
@@ -103,9 +119,9 @@ export class ApiService {
           refresh_token: refreshToken,
         },
       }))
-      .then((data: { token: ServerApiResponse }) => {
+      .then((data: { token: SecurityApiResponse }) => {
         return ApiService.fetchApi(
-          endpoints.refreshToken,
+          refreshTokenEndpoint,
           data,
           API_VERBS.POST,
           {},
@@ -119,8 +135,8 @@ export class ApiService {
   };
 
   private static getRequestConfig(method: API_VERBS,
-                                  headers: any,
-                                  payload: any): any {
+                                  headers: { [key: string]: any },
+                                  payload: { [key: string]: any }): RequestConfigType {
 
     return method === API_VERBS.GET ? {
       method,

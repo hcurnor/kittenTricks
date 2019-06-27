@@ -6,6 +6,7 @@ import {
 import {
   API_VERBS,
   ApiService,
+  SecurityApiResponse,
 } from '../core/http/api.service';
 import {
   AuthStorageService,
@@ -41,14 +42,6 @@ export const endpoints: AuthApiEndpoints = {
 };
 
 export interface AuthApiResponse {
-  [key: string]: any;
-}
-
-export interface ServerApiResponse {
-  access_token?: string;
-  expires_in?: number;
-  refresh_token?: string;
-
   [key: string]: any;
 }
 
@@ -154,7 +147,7 @@ export class AuthApi {
     return AuthStorageService.setExpirationDate(0);
   };
 
-  private processToken = (response: { token: ServerApiResponse }): Promise<AuthApiResponse> => {
+  private processToken = (response: { token: SecurityApiResponse }): Promise<AuthApiResponse> => {
     return Promise.all([
       this.setToken(ACCESS_TOKEN_KEY, response.token.access_token),
       this.setToken(REFRESH_TOKEN_KEY, response.token.refresh_token),

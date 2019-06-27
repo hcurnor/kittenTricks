@@ -3,17 +3,17 @@ import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationScreenProps } from 'react-navigation';
 import { ResetPassword } from './resetPassword.component';
-import { ResetPasswordFormData } from '@src/components/auth';
-import { User } from '@src/core/model';
-import { AuthService } from '../../../service';
-import { AuthApiResponse } from '../../../api/auth.api';
-import { GlobalState } from '../../../store';
+import { ResetPasswordFormData } from '../../../../components/auth';
+import { User } from '../../../../core/model';
+import { AuthService } from '../../../../service';
+import { AuthApiResponse } from '../../../../api/auth.api';
+import { GlobalState } from '../../../../store';
 import {
   resetPassword,
   resetPasswordSuccess,
   resetPasswordFailure,
-} from '../../../actions';
-import { resetAndNavigateAction } from '@src/core/navigation';
+} from '../../../../actions';
+import { resetAndNavigateAction } from '../../../../core/navigation';
 
 interface StateProps {
   loading: boolean;

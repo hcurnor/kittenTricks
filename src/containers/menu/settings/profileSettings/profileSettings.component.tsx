@@ -15,14 +15,14 @@ import {
 import {
   ProfileSetting,
   ProfilePhoto,
-} from '@src/components/social';
-import { CameraIconFill } from '@src/assets/icons';
-import { User } from '@src/core/model';
+} from '../../../../components/social';
+import { CameraIconFill } from '../../../../assets/icons';
+import { User } from '../../../../core/model';
 import {
   ContainerView,
   textStyle,
-} from '@src/components/common';
-import { profile1 } from '@src/core/data/profile';
+} from '../../../../components/common';
+import { profile1 } from '../../../../core/data/profile';
 
 interface ComponentProps {
   profile: User;

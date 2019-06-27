@@ -12,13 +12,13 @@ import {
 import {
   ResetPasswordForm,
   ResetPasswordFormData,
-} from '@src/components/auth';
+} from '../../../../components/auth';
 import {
   Loading,
   LoadingComponentProps,
   ScrollableAvoidKeyboard,
   textStyle,
-} from '@src/components/common';
+} from '../../../../components/common';
 
 interface ComponentProps {
   loading: boolean;
