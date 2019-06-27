@@ -1,6 +1,9 @@
 import React from 'react';
 import { NavigationScreenProps } from 'react-navigation';
-import { AuthStorageService } from '../../../core/authStorage/authStorage.service';
+import {
+  AuthStorageService,
+  ACCESS_TOKEN_KEY,
+} from '../../../core/authStorage/authStorage.service';
 import { resetAndNavigateAction } from '@src/core/navigation';
 
 type ComponentProps = NavigationScreenProps;
@@ -17,7 +20,7 @@ export class AuthLoadingContainer extends React.Component<ComponentProps> {
   };
 
   private bootstrap = (): void => {
-    AuthStorageService.getToken()
+    AuthStorageService.getToken(ACCESS_TOKEN_KEY)
       .then(this.navigate)
       .catch(this.navigateToAuth);
   };

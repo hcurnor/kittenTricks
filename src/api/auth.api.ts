@@ -7,7 +7,11 @@ import {
   API_VERBS,
   ApiService,
 } from '../core/http/api.service';
-import { AuthStorageService } from '@src/core/authStorage/authStorage.service';
+import {
+  AuthStorageService,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+} from '@src/core/authStorage/authStorage.service';
 import { User } from '@src/core/model';
 import {
   ResetPasswordFormData,
@@ -21,20 +25,30 @@ interface AuthApiEndpoints {
   restorePassword: string;
   resetPassword: string;
   logout: string;
+  refreshToken: string;
   currentUser: string;
 }
 
-const endpoints: AuthApiEndpoints = {
+export const endpoints: AuthApiEndpoints = {
   signIn: '/auth/login',
   signUp: '/auth/sign-up',
   requestPassword: '/auth/request-pass',
   restorePassword: '/auth/restore-pass',
   resetPassword: '/auth/reset-pass',
   logout: '/auth/sign-out',
+  refreshToken: '/auth/refresh-token',
   currentUser: '/users/current',
 };
 
 export interface AuthApiResponse {
+  [key: string]: any;
+}
+
+export interface ServerApiResponse {
+  access_token?: string;
+  expires_in?: number;
+  refresh_token?: string;
+
   [key: string]: any;
 }
 
@@ -117,32 +131,52 @@ export class AuthApi {
       {},
       false,
     )
-      .then(this.resetToken);
+      .then(this.clearAuthData);
   }
 
-  private resetToken = (): Promise<void> => {
-    return AuthStorageService.setToken('');
+  private clearAuthData = (): Promise<void[]> => {
+    return Promise.all([
+      this.clearAccessToken(),
+      this.clearRefreshToken(),
+      this.clearExpirationDate(),
+    ]);
   };
 
-  private processToken = (response: { token: string }): Promise<AuthApiResponse> => {
-    return this.setToken(response.token)
-      .then((token: string) => {
-        if (token) {
-          return this.getCurrentUser()
-            .then((user: User) => {
-              return {
-                user: user,
-                token: token,
-              };
-            });
-        }
-      });
+  private clearAccessToken = (): Promise<void> => {
+    return AuthStorageService.setToken(ACCESS_TOKEN_KEY, '');
   };
 
-  private setToken(token: string): Promise<string> {
-    return AuthStorageService.setToken(token)
+  private clearRefreshToken = (): Promise<void> => {
+    return AuthStorageService.setToken(REFRESH_TOKEN_KEY, '');
+  };
+
+  private clearExpirationDate = (): Promise<void> => {
+    return AuthStorageService.setExpirationDate(0);
+  };
+
+  private processToken = (response: { token: ServerApiResponse }): Promise<AuthApiResponse> => {
+    return Promise.all([
+      this.setToken(ACCESS_TOKEN_KEY, response.token.access_token),
+      this.setToken(REFRESH_TOKEN_KEY, response.token.refresh_token),
+      this.setExpirationDate(response.token.expires_in),
+    ])
+      .then(([accessToken]: [string, string, number]) => accessToken)
+      .then((token: string) => this.getCurrentUser())
+      .then((user: User) => ({
+        user: user,
+        token: response.token.access_token,
+      }));
+  };
+
+  private setToken(key: string, token: string): Promise<string> {
+    return AuthStorageService.setToken(key, token)
       .then(() => token);
   }
+
+  private setExpirationDate = (date: number): Promise<number> => {
+    return AuthStorageService.setExpirationDate(date)
+      .then(() => date);
+  };
 
   private getCurrentUser(): Promise<User> {
     return ApiService.fetchApi(

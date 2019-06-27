@@ -1,7 +1,13 @@
 import { API_BASE_URL } from 'react-native-dotenv';
-import { AuthStorageService } from '../authStorage/authStorage.service';
-import { errorComparator } from 'tslint/lib/verify/lintError';
-import { string } from 'prop-types';
+import {
+  AuthStorageService,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+} from '../authStorage/authStorage.service';
+import {
+  endpoints,
+  ServerApiResponse,
+} from '../../api/auth.api';
 
 const authHeader: string = 'Authorization';
 
@@ -31,7 +37,7 @@ export class ApiService {
     let promise: Promise<any>;
 
     if (needAuth) {
-      promise = AuthStorageService.getToken()
+      promise = AuthStorageService.getToken(ACCESS_TOKEN_KEY)
         .then((token: string) => {
           return {
             ...requestHeaders,
@@ -46,20 +52,67 @@ export class ApiService {
       .then((processedHeaders: any) => {
         const requestConfig = this.getRequestConfig(method, processedHeaders, payload);
         return fetch(`${API_BASE_URL}${endpoint}`, requestConfig)
-          .then(this.onApiResponseSuccess)
+          .then((response: Response) => this.onApiResponseSuccess(response, requestConfig))
           .catch(this.onApiResponseError);
       });
   }
 
-  private static onApiResponseSuccess = (response: Response): Promise<any> => {
+  private static onApiResponseSuccess = (response: Response, requestConfig: any): Promise<any> => {
     if (response.status === 200) {
       return response.json();
+    } else if (response.status === 403) {
+      return ApiService.handleTokenExpiration()
+        .then(ApiService.resetAuthData)
+        .then(() => ApiService.retryRequest(response, requestConfig));
     } else {
       return new Promise<string>((resolve: () => void, reject: () => void) => {
         reject();
       });
     }
   };
+
+  private static retryRequest = (responce: Response, requestConfig: any): Promise<any> => {
+    const url: string = responce.url.replace(API_BASE_URL, '');
+    const payload: any = requestConfig.body ? JSON.parse(requestConfig.body) : {};
+    return ApiService.fetchApi(
+      url,
+      payload,
+      requestConfig.method,
+      {},
+    );
+  };
+
+  private static resetAuthData = (data: { token: ServerApiResponse }): Promise<[void, void, void]> => {
+    return Promise.all([
+      AuthStorageService.setToken(ACCESS_TOKEN_KEY, data.token.access_token),
+      AuthStorageService.setToken(REFRESH_TOKEN_KEY, data.token.refresh_token),
+      AuthStorageService.setExpirationDate(data.token.expires_in),
+    ]);
+  };
+
+  private static handleTokenExpiration(): Promise<{ token: ServerApiResponse }> {
+    return Promise.all([
+      AuthStorageService.getToken(ACCESS_TOKEN_KEY),
+      AuthStorageService.getToken(REFRESH_TOKEN_KEY),
+      AuthStorageService.getExpirationDate(),
+    ])
+      .then(([accessToken, refreshToken, expireDate]: [string, string, number]) => ({
+        token: {
+          access_token: accessToken,
+          expires_in: expireDate,
+          refresh_token: refreshToken,
+        },
+      }))
+      .then((data: { token: ServerApiResponse }) => {
+        return ApiService.fetchApi(
+          endpoints.refreshToken,
+          data,
+          API_VERBS.POST,
+          {},
+          true,
+        );
+      });
+  }
 
   private static onApiResponseError = (error: Error): Error => {
     return error;

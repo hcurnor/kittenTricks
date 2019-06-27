@@ -4,6 +4,7 @@ import { User } from '@src/core/model';
 import { ProfileSettings } from './profileSettings.component';
 import { GlobalState } from '@src/store';
 import { connect } from 'react-redux';
+import { UserService } from '../../../service';
 
 interface StateProps {
   user: User;

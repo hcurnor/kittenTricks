@@ -19,7 +19,7 @@ import {
 import { CameraIconFill } from '@src/assets/icons';
 import { User } from '@src/core/model';
 import {
-  ContainerView, Loading, LoadingComponentProps,
+  ContainerView,
   textStyle,
 } from '@src/components/common';
 import { profile1 } from '@src/core/data/profile';
@@ -58,12 +58,8 @@ class ProfileSettingsComponent extends React.Component<ProfileSettingsProps> {
 
   private renderContent = (): React.ReactNode => {
     const { themedStyle, profile } = this.props;
-    const firstName: string = profile ? profile.firstName : '';
-    const lastName: string = profile ? profile.lastName : '';
-    const email: string = profile ? profile.email : '';
-    const age: string = profile ? `${profile.age}` : '';
-    const city: string = profile ? profile.address.city : '';
-    const street: string = profile ? profile.address.street : '';
+    const city: string = profile.address ? profile.address.city : '';
+    const street: string = profile.address ? profile.address.street : '';
 
     return (
       <React.Fragment>
@@ -76,11 +72,11 @@ class ProfileSettingsComponent extends React.Component<ProfileSettingsProps> {
           <View style={themedStyle.nameSection}>
             <ProfileSetting
               style={[themedStyle.profileSetting, themedStyle.nameParameter]}
-              value={firstName}
+              value={profile.firstName}
             />
             <ProfileSetting
               style={[themedStyle.profileSetting, themedStyle.nameParameter, themedStyle.lastNameParameter]}
-              value={lastName}
+              value={profile.lastName}
             />
           </View>
         </View>
@@ -96,12 +92,12 @@ class ProfileSettingsComponent extends React.Component<ProfileSettingsProps> {
           <ProfileSetting
             style={themedStyle.profileSetting}
             hint='Email'
-            value={email}
+            value={profile.email}
           />
           <ProfileSetting
             style={themedStyle.profileSetting}
             hint='Age'
-            value={age}
+            value={`${profile.age}`}
           />
           <ProfileSetting
             style={themedStyle.profileSetting}
